@@ -11,6 +11,22 @@ export default function Sidebar(props) {
 
   const { open, setOpen, products } = props;
   const { cartItems, addToCart, removeFromCart } = useContext(ShopContext);
+
+  const calculateTotalCost = () => {
+    let total = 0;
+
+    for (const productId in cartItems) {
+      const product = products.find((p) => p.id === Number(productId));
+      const quantity = cartItems[productId];
+      if (product) {
+        total += parseFloat(product.price) * quantity;
+      }
+    }
+
+    return total.toFixed(2);
+  }
+
+  
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
@@ -48,7 +64,7 @@ export default function Sidebar(props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <div className="absolute right-0 top-0 ml-8 mr-8 flex pr-2 pt-5 sm:-ml-10 sm:pl-4">
+                    <div className="absolute right-0 top-0 z-50 ml-8 mr-4 flex pr-2 pt-5 sm:-ml-10 sm:pl-4">
                       <button
                         type="button"
                         className="rounded-md text-gray-500 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white"
@@ -62,7 +78,7 @@ export default function Sidebar(props) {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Panel title
+                        Shopping Cart
                       </Dialog.Title>
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
@@ -71,7 +87,7 @@ export default function Sidebar(props) {
                         let totalItemPrice = (parseFloat(product.price) * cartItemAmount).toFixed(2)
                         if (cartItems[product.id] !== 0 ){
                           return (
-                          <div>
+                          <div className='my-3 border border-gray-300 p-3 rounded-xl'>
                           <div className='flex gap-5 mb-3 overflow-hidden'>
                               <img src={product.image} className='w-1/5 mt-2'/>
                               <div className='mt-4'>
@@ -80,18 +96,21 @@ export default function Sidebar(props) {
                               <div className='flex gap-4 text-center'>
                                 <div className='my-auto'>{cartItemAmount}</div>
                                 <div className='my-auto'>
-                                  <button onClick={() => addToCart(product.id)} className=' border border-gray-500 py-0.1 px-1'>+</button>
-                                  <button onClick={() => removeFromCart(product.id)} className=' border border-gray-500 py-0.1 px-1.5'>-</button>
+                                  <button onClick={() => addToCart(product.id)} className='rounded border border-white bg-blue-500 text-white py-0.1 px-1'>+</button>
+                                  <button onClick={() => removeFromCart(product.id)} className=' rounded border border-white bg-blue-500 text-white py-0.1 px-1.5'>-</button>
                                   </div>
                               </div> 
                             </div>
-                            <div className='ml-2'>
+                            <div className='ml-2 text-right'>
                               {totalItemPrice}$
                             </div>
                           </div>
                         )}
                       }
                     )}
+                    </div>
+                    <div className='flex justify-center'>
+                      <button className='bg-blue-500 text-white text-center p-2 rounded-md'>Checkout ({calculateTotalCost()}$)</button>
                     </div>
                   </div>
                 </Dialog.Panel>

@@ -17,7 +17,7 @@ function App() {
 
   return (
     <ShopContextProvider>
-        <Navbar open={open} setOpen={setOpen}/>
+        <Navbar open={open} setOpen={setOpen} products={PRODUCTS}/>
         <Sidebar open={open} setOpen={setOpen} products={PRODUCTS}/>
         <Hero/>
         <Shop products={PRODUCTS}/>
