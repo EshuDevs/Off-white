@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Logo from '../assets/logo.png';
 import { PRODUCTS } from './products';
+import { ShopContext } from '../context/shop-context';
 
 function Navbar(props) {
   const { open, setOpen, } = props;
   const [searchText, setSearchText] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const { cartItems } = useContext(ShopContext)
 
   const handleSearchChange = (e) => {
     const { value } = e.target;
@@ -27,6 +29,17 @@ function Navbar(props) {
     } else {
       setSuggestions([]);
     }
+  };
+
+  const calculateTotalItems = () => {
+    let totalItems = 0;
+
+    for (const productId in cartItems) {
+      const quantity = cartItems[productId];
+      totalItems += quantity;
+    }
+
+    return totalItems;
   };
 
   return (
@@ -60,8 +73,13 @@ function Navbar(props) {
             )}
           </li>
           <li>
-            <button onClick={() => setOpen(true)} className="material-symbols-outlined flex text-3xl cursor-pointer">
+          <button onClick={() => setOpen(true)} className="material-symbols-outlined flex text-3xl cursor-pointer relative">
               shopping_bag
+              {calculateTotalItems() > 0 && (
+                <span className="relative top-5 right-4 font-inter bg-blue-500 font-semibold text-white pt-0.5 rounded-full w-4 h-4 flex justify-center items-center text-xs">
+                  {calculateTotalItems()}
+                </span>
+              )}
             </button>
           </li>
         </ul>
