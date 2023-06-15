@@ -30,6 +30,10 @@ function Navbar(props) {
       setSuggestions([]);
     }
   };
+  const handleSuggestionClick = (suggestion) => {
+    // Handle the suggestion click here
+    console.log('Clicked suggestion:', suggestion);
+  };
 
   const calculateTotalItems = () => {
     let totalItems = 0;
@@ -59,14 +63,18 @@ function Navbar(props) {
             />
             <button className="material-symbols-outlined absolute top-0.5 right-2">search</button>
             {suggestions.length > 0 && (
-              <ul className="absolute z-10 bg-white w-100% font-inter rounded-lg shadow-lg py-2">
+              <ul className="absolute z-10 bg-white w-[12rem] font-inter text-sm md:w-[18rem] md:text-lg lg:w-[16rem] rounded-lg shadow-lg lg:mr-5 py-2">
                 {suggestions.map((suggestion) => (
                   <li
                     key={suggestion.id}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                    className="px-4 py-2 gap-2 lg:gap-5 cursor-pointer hover:bg-gray-200 flex items-center"
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
-                    {suggestion.name}
+                    <img src={suggestion.image} alt={suggestion.name} className=" w-12 md:w-15 md:h-12 lg:w-20 " />
+                    <div className='ml-auto'>
+                      <p className='lg:mt-6'>{suggestion.name}</p>
+                      <p className="text-gray-500 text-right">${suggestion.price}</p>
+                    </div>
                   </li>
                 ))}
               </ul>

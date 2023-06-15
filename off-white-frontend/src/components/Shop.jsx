@@ -16,9 +16,9 @@ const Shop = (props) => {
             {products.map((product) => {
               const cartItemAmount = cartItems[product.id];
               return(
-              <a key={product.id} className="group border border-gray-200 rounded-lg">
+              <div to="/ProductPage" key={product.id} className="group border border-gray-200 rounded-lg">
                 <Link to="/ProductPage">
-                <div className="w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                <div className="w-full overflow-hidden rounded-lg bg-gray-200">
                   <img
                     src={product.image}
                     className="h-full w-full object-cover object-center hover:opacity-75"
@@ -28,7 +28,7 @@ const Shop = (props) => {
                 <h3 className="mt-12 text-sm text-gray-700 ml-2">{product.name}</h3>
                 <p className="mt-1 py-3 mb-6 text-base font-normal ml-2 text-gray-900">{product.price}</p>
                 <button onClick={() => addToCart(product.id)} className="ml-2 rounded-lg p-1 mb-6 border  bg-gray-200 text-gray-700">Add to Cart {cartItemAmount > 0 && <>({cartItemAmount})</>}</button>
-              </a>)
+              </div>)
           })}
           </div>
         </div>
