@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Logo from '../assets/logo.png';
 import { PRODUCTS } from './products';
 import { ShopContext } from '../context/shop-context';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Navbar(props) {
   const { open, setOpen, } = props;
@@ -48,15 +48,15 @@ function Navbar(props) {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-white">
       <nav className="justify-between w-full flex bg-transparent p-5">
-      <Link to='/'>
+        <Link to='/'>
             <div>
                 <img src={Logo} className="w-24 mt-2 md:w-auto md:m-0 lg:w-1/4" alt="Logo" />
             </div>
         </Link>
         <ul className="list-none align-middle flex gap-5 items-center text-brown font-kanit font-bold text-xl w-auto">
-          <li className="relative">
+          <li className="relative border border-200-grey rounded-xl">
             <input
               type="text"
               placeholder="Search"
@@ -82,16 +82,6 @@ function Navbar(props) {
                 ))}
               </ul>
             )}
-          </li>
-          <li>
-          <button onClick={() => setOpen(true)} className="material-symbols-outlined flex text-3xl cursor-pointer relative">
-              shopping_bag
-              {calculateTotalItems() > 0 && (
-                <span className="relative top-5 right-4 font-inter bg-blue-500 font-semibold text-white pt-0.5 rounded-full w-4 h-4 flex justify-center items-center text-xs">
-                  {calculateTotalItems()}
-                </span>
-              )}
-            </button>
           </li>
         </ul>
       </nav>
